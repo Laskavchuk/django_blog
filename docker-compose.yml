@@ -1,0 +1,33 @@
+version: "3.1"
+
+services:
+  backend:
+    build: ..
+#    command: daphne -b 0.0.0.0 -p 8000 project.asgi:application
+    command: tail -f > /dev/null
+#    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/project
+    ports:
+      - 8000:8000
+#    expose:
+#      - 8000
+    restart: always
+    depends_on:
+      - db
+#      - redis
+    env_file:
+      - .env
+  db:
+    image: postgres:15.0
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+      - POSTGRES_DB=${SQL_DATABASE}
+    env_file:
+      - .env
+    restart: unless-stopped
+volumes:
+  postgres_data:
