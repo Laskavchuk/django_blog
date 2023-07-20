@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from model_choices import Status
+from project.mixins.models import PKMixin
 
 
 class PublishedManager(models.Manager):
@@ -10,7 +11,7 @@ class PublishedManager(models.Manager):
         return super().get_queryset().filter(status=Status.PUBLISHED)
 
 
-class Post(models.Model):
+class Post(PKMixin):
 
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
@@ -19,8 +20,6 @@ class Post(models.Model):
                                related_name='blog_posts')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2,
                               choices=Status.choices,
                               default=Status.DRAFT)
