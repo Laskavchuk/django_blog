@@ -144,7 +144,8 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD',
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 try:
-    from django_blog.project.settings_local import *  # noqa
+    from project.settings_local import *  # noqa
 except ImportError:
     ...
