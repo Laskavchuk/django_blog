@@ -1,0 +1,5 @@
+<h2>Add a new comment</h2>
+<form action="{% url "post_comment" post.id %}" method="post">
+    {% include 'parts/form.html' with form=form %}
+    <p><input type="submit" value="Add comment"></p>
+</form>
