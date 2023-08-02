@@ -6,3 +6,5 @@ pytest==7.4.0
 pytest-django==4.5.2
 faker==19.2.0
 django-widget-tweaks==1.4.12
+django-taggit==4.0.0
+pytest-cov==4.1.0

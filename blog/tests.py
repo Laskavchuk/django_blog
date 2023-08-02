@@ -61,3 +61,55 @@ def test_posts(client, faker):
     response = client.get(url)
     assert response.status_code == 200
     assert not len((response.context['posts'])) == Post.objects.count()
+
+
+def test_post_share(client, faker):
+    post = Post.objects.create(
+        title=faker.word(),
+        slug=faker.slug(),
+        author=User.objects.create_user(username=faker.word(),
+                                        password=faker.password()),
+        body=faker.sentences(),
+        status=Status.PUBLISHED
+    )
+    url = reverse('post_share', args=[post.id])
+    response = client.get(url)
+    assert response.status_code == 200
+
+    data = {}
+    response = client.post(url, data=data)
+    assert response.status_code == 200
+    assert all(v == ['This field is required.']
+               for v in response.context['form'].errors.values())
+
+    data = {
+        'name': faker.name(),
+        'email': faker.email(),
+        'to': faker.email()
+    }
+    response = client.post(url, data=data, follow=True)
+    assert response.status_code == 200
+
+
+def test_comment_post(client, faker):
+    post = Post.objects.create(
+        title=faker.word(),
+        slug=faker.slug(),
+        author=User.objects.create_user(username=faker.word(),
+                                        password=faker.password()),
+        body=faker.sentences(),
+        status=Status.PUBLISHED
+    )
+    url = reverse('post_comment', args=[post.id])
+    data = {}
+    response = client.post(url, data=data)
+    assert response.status_code == 200
+    assert all(v == ['This field is required.']
+               for v in response.context['form'].errors.values())
+    data = {
+        'name': faker.name(),
+        'email': faker.email(),
+        'body': faker.sentence()
+    }
+    response = client.post(url, data=data, follow=True)
+    assert response.status_code == 200
