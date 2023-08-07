@@ -34,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 # Application definition
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,6 +46,8 @@ INSTALLED_APPS = [
     # external
     'widget_tweaks',
     'taggit',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     # internal
     'blog',
 ]
