@@ -1,11 +1,10 @@
 from django.urls import path
 
 from .feeds import LatestPostsFeed
-from .views import PostView, post_share, post_comment, \
+from .views import post_share, post_comment, \
     post_list, post_detail, post_search
 
 urlpatterns = [
- # path('', PostView.as_view(), name='posts'),
  path('', post_list, name='posts'),
  path('<int:year>/<int:month>/<int:day>/<slug:post>/',
       post_detail, name='post'
