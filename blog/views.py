@@ -1,18 +1,18 @@
-from django.contrib.postgres.search import SearchVector, SearchQuery, \
-    SearchRank, TrigramSimilarity
-from django.core.mail import send_mail
+from django.contrib.postgres.search import TrigramSimilarity
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 from taggit.models import Tag
 from django.db.models import Count
 
-from model_choices import Status
+from project.model_choices import Status
 from .forms import EmailPostForm, SearchForm
 from .model_forms import CommentForm
 from .models import Post
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from .tasks import send_email_task
 
 
 class PostView(ListView):
@@ -54,14 +54,7 @@ def post_share(request, post_id):
         if form.is_valid():
             # Поля формы успешно прошли валидацию
             cd = form.cleaned_data
-            post_url = request.build_absolute_uri(
-                post.get_absolute_url())
-            subject = f"{cd['name']} recommends you read " \
-                      f"{post.title}"
-            message = f"Read {post.title} at {post_url}\n\n" \
-                      f"{cd['name']}\'s comments: {cd['comments']}"
-            send_mail(subject, message, 'your_account@gmail.com',
-                      [cd['to']])
+            send_email_task.delay(post_id, cd)
             sent = True
     else:
         form = EmailPostForm()

@@ -11,3 +11,5 @@ pytest-cov==4.1.0
 markdown==3.4.4
 psycopg2-binary==2.9.7
 pytest-factoryboy==2.5.1
+celery[redis]==5.3.1
+daphne==4.0.0

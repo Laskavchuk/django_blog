@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'daphne',
     'django.contrib.staticfiles',
     # external
     'widget_tweaks',
@@ -82,6 +83,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
+ASGI_APPLICATION = "project.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -150,6 +152,10 @@ STATIC_ROOT = 'static_files'
 STATICFILES_DIRS = ['assets']
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
 
 EMAIL_HOST = env.str('EMAIL_HOST', default='EMAIL_HOST')
 EMAIL_PORT = env.str('EMAIL_PORT', default='EMAIL_PORT')
