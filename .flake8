@@ -1,0 +1,7 @@
+[flake8]
+    exclude =
+        venv,
+        __pycache__
+        *tests*.py
+        migrations
+        parser.py
