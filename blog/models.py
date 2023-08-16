@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
 
-from model_choices import Status
+from project.model_choices import Status
 from project.mixins.models import PKMixin
 
 

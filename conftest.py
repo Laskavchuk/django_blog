@@ -6,7 +6,7 @@ from django.db import connection
 from pytest_factoryboy import register
 
 from blog.models import Post
-from model_choices import Status
+from project.model_choices import Status
 
 fake = faker.Faker()
 
