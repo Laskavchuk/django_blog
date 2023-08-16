@@ -10,10 +10,12 @@ from project.model_choices import Status
 
 fake = faker.Faker()
 
+
 @pytest.fixture(autouse=True)
 def enable_pg_trgm_for_tests():
     with connection.cursor() as cursor:
         cursor.execute('CREATE EXTENSION IF NOT EXISTS pg_trgm;')
+
 
 @pytest.fixture(scope='session')
 def faker_fixture():
@@ -23,6 +25,8 @@ def faker_fixture():
 @pytest.fixture(autouse=True)
 def django_db_setup(db):
     yield
+
+
 @register
 class UserFactory(factory.django.DjangoModelFactory):
     username = factory.LazyAttribute(lambda x: fake.word())
@@ -30,6 +34,8 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = User
+
+
 @register
 class PostFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: fake.word())
@@ -40,5 +46,3 @@ class PostFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Post
-
-

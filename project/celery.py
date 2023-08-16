@@ -1,5 +1,5 @@
 import os
-from time import sleep
+# from time import sleep
 
 from celery import Celery
 

@@ -39,4 +39,3 @@ def get_most_commented_posts(count: int = 5) -> QuerySet[Post]:
 @register.filter(name='markdown')
 def markdown_format(text):
     return mark_safe(markdown.markdown(text))
-
