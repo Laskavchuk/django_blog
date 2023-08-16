@@ -3,7 +3,7 @@ from django.db.models import QuerySet
 from django.urls import reverse
 
 from blog.models import Post
-from model_choices import Status
+from project.model_choices import Status
 
 
 def test_posts(client, faker, post_factory):
